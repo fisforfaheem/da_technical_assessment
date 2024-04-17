@@ -1,5 +1,6 @@
 import 'package:da_technical_assessment/core/app_strings/app_strings.dart';
 import 'package:da_technical_assessment/core/color/app_colors.dart';
+import 'package:da_technical_assessment/core/utils/utils.dart';
 import 'package:da_technical_assessment/feature/top_up/data/model/topup_entity.dart';
 import 'package:da_technical_assessment/feature/top_up/presentation/cubit/topup_cubit.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,21 @@ class TopUpHistoryWidget extends StatelessWidget {
                       beneficiary.phoneNumber.toString(),
                       style: const TextStyle(fontSize: 16),
                     ),
-                    trailing: Text('${beneficiary.amount} AED'),
+                    trailing: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '${beneficiary.amount} AED',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                        const Text(
+                          '+${Utils.topUpCharges} AED charges',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 8, color: Colors.red),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },

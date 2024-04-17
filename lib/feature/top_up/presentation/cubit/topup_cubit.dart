@@ -32,7 +32,12 @@ class TopUpCubit extends BaseCubit<TopUpState> {
       emitLoading();
 
       // topUpRepository.addBeneficiary(user);
-
+      if (isAlreadyAdded(user.phoneNumber!)) {
+        emit(
+          state.copyWith(status: StatusEnum.failed, message: 'Phone number already exist'),
+        );
+        return;
+      }
       beneficiaries.insert(
         0,
         user.copyWith(),
@@ -44,6 +49,11 @@ class TopUpCubit extends BaseCubit<TopUpState> {
       emit(state.copyWith(
           status: StatusEnum.failed, message: 'something went wrong'));
     }
+  }
+
+  // already added search by phone number
+  bool isAlreadyAdded(String phoneNumber) {
+    return beneficiaries.any((element) => element.phoneNumber == phoneNumber);
   }
 
   // get beneficiary

@@ -29,6 +29,8 @@ class _RechargeScreenState extends State<RechargeScreen> {
 
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
 
+  final subStateKey = GlobalKey();
+
   late final TopUpCubit cubit;
 
   @override
@@ -95,6 +97,11 @@ class _RechargeScreenState extends State<RechargeScreen> {
                     hintText: AppStrings.amount,
                     controller: _amountController,
                     textInputType: TextInputType.number,
+                    onChanged: (txt) {
+                      _rechargeAmount =
+                          int.tryParse(_amountController.text) ?? 0;
+                      subStateKey.currentState?.setState(() {});
+                    },
                     validation: (value) {
                       if (value == null || value.isEmpty) {
                         return AppStrings.pleaseEnterCorrectNumber;
@@ -105,61 +112,61 @@ class _RechargeScreenState extends State<RechargeScreen> {
                 const Gap(value: 20),
                 SizedBox(
                   height: cubit.isEmptyList ? 0 : 200,
-                  child: StatefulBuilder(builder: (ctx, subSetState) {
-                    return GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: cubit.topupAmountList.length,
-                      itemBuilder: (ctx, index) {
-                        final amount = cubit.topupAmountList[index];
+                  child: StatefulBuilder(
+                    key: subStateKey,
+                    builder: (ctx, subSetState) {
+                      return GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: cubit.topupAmountList.length,
+                        itemBuilder: (ctx, index) {
+                          final amount = cubit.topupAmountList[index];
 
-                        // check for invalid amount and hide the options
-                        // if (amount >= Utils.currentUser.balance!) {
-                        //   return const SizedBox.shrink();
-                        // }
-
-                        final isSelected = _rechargeAmount == amount;
-                        return InkWell(
-                          onTap: () {
-                            _rechargeAmount = amount;
-                            _amountController.text = _rechargeAmount.toString();
-                            subSetState(() {});
-                          },
-                          child: Container(
-                            height: 50,
-                            // margin: const EdgeInsets.symmetric(horizontal: 10 , vertical: 20),
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            decoration: BoxDecoration(
-                              color: isSelected
-                                  ? AppColors.primaryColor
-                                  : AppColors.grey.withOpacity(.2),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Center(
-                              child: Text(
-                                amount.toString(),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: isSelected
-                                      ? AppColors.white
-                                      : AppColors.black,
-                                  fontWeight:
-                                      isSelected ? FontWeight.bold : null,
+                          final isSelected = _rechargeAmount == amount;
+                          return InkWell(
+                            onTap: () {
+                              _rechargeAmount = amount;
+                              _amountController.text =
+                                  _rechargeAmount.toString();
+                              subSetState(() {});
+                            },
+                            child: Container(
+                              height: 50,
+                              // margin: const EdgeInsets.symmetric(horizontal: 10 , vertical: 20),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                color: isSelected
+                                    ? AppColors.primaryColor
+                                    : AppColors.grey.withOpacity(.2),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  amount.toString(),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: isSelected
+                                        ? AppColors.white
+                                        : AppColors.black,
+                                    fontWeight:
+                                        isSelected ? FontWeight.bold : null,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
-                        childAspectRatio: 2,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                      ),
-                    );
-                  }),
+                          );
+                        },
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 4,
+                          childAspectRatio: 2,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                        ),
+                      );
+                    },
+                  ),
                 ),
                 const Gap(),
                 if (!cubit.isEmptyList)

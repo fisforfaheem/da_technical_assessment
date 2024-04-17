@@ -14,10 +14,8 @@ class TopUpService {
   static Map<String, num> userTopUpLimits = {};
 
   // Function to check if a top-up transaction exceeds the limit
-  static bool isBasedAmountExceedingLimit() {
-    final bool result = maxBasedLimitAmount <= 0 ? true : false;
-    return result;
-  }
+  static bool isBasedAmountExceedingLimit() =>
+      maxBasedLimitAmount <= 0 ? true : false;
 
   // Function to check if a top-up transaction exceeds the limit
   static bool isExceedingLimit(String userId, num amount) {

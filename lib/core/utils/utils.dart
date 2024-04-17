@@ -13,6 +13,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Utils {
   static UserEntity currentUser = UserEntity();
 
+  static const int topUpCharges = 1;
+
   // debug print data
   static void debug(dynamic message, [StackTrace? stackTrace]) {
     debugPrint(message);

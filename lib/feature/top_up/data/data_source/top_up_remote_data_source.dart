@@ -16,10 +16,8 @@ class TopUpRemoteDataSource {
         RequestType.post,
         requestBody: entity.toMap(),
       );
-      if (response.statusCode == 201 || response.statusCode == 200) {
-        return TopUpEntity.fromMap(response.data);
-      }
-      throw GeneralException(message: response.data);
+
+      return TopUpEntity.fromMap(response.data);
     } catch (e) {
       rethrow;
     }
@@ -35,10 +33,7 @@ class TopUpRemoteDataSource {
         kBeneficiary,
         RequestType.get,
       );
-      if (response.statusCode == 200) {
-        return UserEntity.fromJsonToList(response.data);
-      }
-      throw GeneralException(message: response.data);
+      return UserEntity.fromJsonToList(response.data);
     } catch (e) {
       rethrow;
     }
@@ -54,15 +49,11 @@ class TopUpRemoteDataSource {
 
   Future<void> topUpMobileRecharge(TopUpEntity entity) async {
     try {
-      final response = await client.invoke(
+      await client.invoke(
         kBeneficiaryTopUp,
         RequestType.post,
         requestBody: entity.toMap(),
       );
-      if (response.statusCode == 201 || response.statusCode == 200) {
-        return;
-      }
-      throw GeneralException(message: response.data);
     } catch (e) {
       rethrow;
     }
