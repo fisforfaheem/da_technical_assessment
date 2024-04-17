@@ -14,7 +14,7 @@ class LoginCubit extends BaseCubit<LoginState> {
       email: 'verify_login@gmail.com',
       password: '123',
       isVerified: true,
-      balance: 1001,
+      balance: 5000,
     ),
     UserEntity(
       username: 'login',
