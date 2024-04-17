@@ -90,17 +90,18 @@ class _RechargeScreenState extends State<RechargeScreen> {
                   ),
                 ),
                 const Gap(value: 20),
-                CommonTextFieldWidget(
-                  hintText: AppStrings.amount,
-                  controller: _amountController,
-                  textInputType: TextInputType.number,
-                  validation: (value) {
-                    if (value == null || value.isEmpty) {
-                      return AppStrings.pleaseEnterCorrectNumber;
-                    }
-                    return null;
-                  },
-                ),
+                if (!cubit.isEmptyList)
+                  CommonTextFieldWidget(
+                    hintText: AppStrings.amount,
+                    controller: _amountController,
+                    textInputType: TextInputType.number,
+                    validation: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppStrings.pleaseEnterCorrectNumber;
+                      }
+                      return null;
+                    },
+                  ),
                 const Gap(value: 20),
                 SizedBox(
                   height: cubit.isEmptyList ? 0 : 200,

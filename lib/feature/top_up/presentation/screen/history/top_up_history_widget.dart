@@ -25,7 +25,8 @@ class TopUpHistoryWidget extends StatelessWidget {
                 }
 
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15 , vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                   child: ListTile(
                     tileColor: AppColors.white,
                     shape: RoundedRectangleBorder(
@@ -33,7 +34,7 @@ class TopUpHistoryWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                     ),
                     leading: CircleAvatar(
-                      backgroundColor: Theme.of(context).primaryColor,
+                      backgroundColor: AppColors.primaryColor,
                       child: const Icon(
                         Icons.person,
                         color: Colors.white,

@@ -57,7 +57,13 @@ class _RechargeScreenState extends State<AddBeneficiaryScreen> {
                 controller: _phoneController,
                 textInputType: TextInputType.phone,
                 validation: (txt) {
-                  return txt!.isEmpty ? AppStrings.pleaseEnterText : null;
+                  // UAE phone number regular expression
+                  RegExp regex = RegExp(r'^\+?971([0-9]{9})$');
+                  return txt!.isEmpty
+                      ? AppStrings.pleaseEnterText
+                      : (!regex.hasMatch(txt))
+                          ? AppStrings.pleaseEnterCorrectNumber
+                          : null;
                 },
               ),
               const Gap(),
